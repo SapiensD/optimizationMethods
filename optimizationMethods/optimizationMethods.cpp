@@ -3,8 +3,8 @@
 using namespace std;
 
 // Инициализация переменных
-double a = -3, b = 7;
-double eps = 0.5;
+double a = -3, b = 7;	// section
+double eps = 0.5;		// fault
 double delta = 0.2;
 
 // Меню
@@ -26,14 +26,16 @@ void fibonaci(double, double, double, double);
 // Условная оптимизация
 //
 
-double f(double x) { return 2 * x * x + 2 * x + 3.5; }
+double f(double x) { return 2 * x * x + 2 * x + 3.5; } // My Function to single methods
 void showFunc() { 
 	cout << "1 : f(x) = 2x^2 +2x + 3.5" << endl
 		<< "[" << a << "; " << b << "]" << endl
 		<< "Eps = " << eps << endl << endl;
-}
+}	   // красивый вывод исходной функции
 void out(double a, double b) { cout << endl << "x* = " << (a + b) / 2 << " +- " << (b - a) / 2 << endl; }
 
+
+// Menu functions
 void nMethodsMenu() {
 	bool flag = true;
 	cout << endl << "Меню выбора многомерных методов : " << endl;
