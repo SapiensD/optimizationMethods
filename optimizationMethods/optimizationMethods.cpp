@@ -27,7 +27,7 @@ void fibonaci(double, double, double, double);
 //
 
 double f(double x) { return 2 * x * x + 2 * x + 3.5; } // My Function to single methods
-void showFunc() { 
+void showFunc() {
 	cout << "1 : f(x) = 2x^2 +2x + 3.5" << endl
 		<< "[" << a << "; " << b << "]" << endl
 		<< "Eps = " << eps << endl << endl;
@@ -49,12 +49,12 @@ void nMethodsMenu() {
 			case '1':
 				break;
 			case '0':
-				flag = false;
 				mainMenu();
 				break;
 			}
-			}
+			flag = false;
 		}
+	}
 
 }
 void singleMethodsMenu() {
@@ -65,6 +65,7 @@ void singleMethodsMenu() {
 	cout << "4 - Золотое сечение" << endl;
 	cout << "5 - Фибоначчи" << endl;
 	cout << "0 - вернуться в главное меню" << endl << endl;
+	cout << "C - Очистка консоли" << endl;
 	bool flag = true;
 	while (flag) {
 		if (_kbhit())
@@ -73,32 +74,31 @@ void singleMethodsMenu() {
 			{
 			case '1':
 				uniformSearch(a, b, eps);
-				singleMethodsMenu();
 				break;
 			case '2':
 				halfDivision(a, b, eps);
-				singleMethodsMenu();
 				break;
 			case '3':
 				dichotomy(a, b, eps);
-				singleMethodsMenu();
 				break;
 			case '4':
 				goldenRation(a, b, eps);
-				singleMethodsMenu();
 				break;
 			case '5':
 				fibonaci(a, b, eps, delta);
-				singleMethodsMenu();
 				break;
 			case '0':
 				flag = false;
 				mainMenu();
 				break;
+			case 'c':
+				clearConsole();
+				break;
 			}
+			flag = false;
+			singleMethodsMenu();
 		}
 	}
-	clearConsole();
 }
 void mainMenu() {
 	bool flag = true;
@@ -109,6 +109,7 @@ void mainMenu() {
 	cout << "2 - Многомерной безусловной оптимизации" << endl;
 	cout << "3 - Условной оптимизации" << endl;
 	cout << "0 - Выйти из приложения" << endl;
+	cout << "C - Очистка консоли" << endl;
 	while (flag) {
 		if (_kbhit())
 		{
@@ -116,13 +117,17 @@ void mainMenu() {
 			{
 			case '1':
 				singleMethodsMenu();
+				break;
 			case '2':
 				nMethodsMenu();
 				break;
 			case '0':
-				flag = false;
+				break;
+			case 'c':
+				mainMenu();
 				break;
 			}
+			flag = false;
 		}
 	}
 }
@@ -137,16 +142,16 @@ int main()
 void uniformSearch(double a, double b, double eps) {
 	showFunc();
 	cout << "1 - Неоьходимо определить кол-во итераций, для этого вычислим число N по формуле : N = (b-a)/Eps-1 с округлением в большую сторону";
-	int N = ceil((b-a)/eps-1);
+	int N = ceil((b - a) / eps - 1);
 	cout << " N = " << N << endl;
 	double Xi = 0;
 	double minXi = 0;
 	double minI = 0;
 	double minFXi = f(a);
 	cout << "2 - Необходимо на каждом шаге в каждой вычисленной точке вычислить значение функции и найти min(F) из вычисленных" << endl;
-	for (int i = 1; i < N+1; i++) {
-		Xi = a + i * (b - a) / (N+1);
-		cout << "X" << i << " = " << Xi << " f(x) = "<< f(Xi) << endl;
+	for (int i = 1; i < N + 1; i++) {
+		Xi = a + i * (b - a) / (N + 1);
+		cout << "X" << i << " = " << Xi << " f(x) = " << f(Xi) << endl;
 		if (minFXi > f(Xi)) {
 			minXi = Xi;
 			minFXi = f(Xi);
@@ -155,7 +160,7 @@ void uniformSearch(double a, double b, double eps) {
 	}
 	cout << "3 - Находим минимальное значение функции : " << minXi << " f(x) = " << minFXi << endl;
 	cout << "k = " << N << " | ";
-	out(a + (minI-1) * (b - a) / (N + 1), a + (minI+1) * (b - a) / (N + 1));
+	out(a + (minI - 1) * (b - a) / (N + 1), a + (minI + 1) * (b - a) / (N + 1));
 }
 void halfDivision(double a, double b, double eps) {
 	showFunc();
@@ -171,10 +176,10 @@ void halfDivision(double a, double b, double eps) {
 	// Метод
 	do {
 		k++;
-		cout << endl <<"k = " << k << endl;
+		cout << endl << "k = " << k << endl;
 		Yk = a + (L2k / 4);
 		Zk = b - (L2k / 4);
-		fYk = f(Yk); 
+		fYk = f(Yk);
 		fZk = f(Zk);
 		cout << "Yk = " << Yk << endl << "Zk = " << Zk << endl;
 		if (fYk < fXmd) {
@@ -235,7 +240,7 @@ void dichotomy(double a, double b, double eps) {
 		L2k = abs(b - a);
 		cout << "L2k = " << L2k << endl;
 		if (L2k > 2 * eps) cout << "L2k > 2*eps	=> идём к шагу 3 и счиатем k = k+1" << endl;
-	} while (L2k > 2*eps);
+	} while (L2k > 2 * eps);
 	cout << "k = " << k << " | ";
 	out(a, b);
 
@@ -244,19 +249,19 @@ void goldenRation(double a, double b, double eps) {
 	int k = -1;
 	double L2k = 0;
 	double gold = (3 - sqrt(5)) / 2;
-	double Yk = a + gold*(b-a), 
-		   Zk = a + b -Yk;
+	double Yk = a + gold * (b - a),
+		Zk = a + b - Yk;
 	double fYk = f(Yk), fZk = f(Zk);
 	showFunc();
 	cout << "2 : k = 0" << endl;
 	cout << "3 : Вычисляем y0 = a0 + (3 - sqrt(5))/2 * (b0-a0) " << endl;
 	cout << "Y0 = " << Yk << " Z0 = " << Zk << endl;
-	cout << "4 : Вычислим f(Yk) f(Zk) :: " << "f(Yk) = " << f(Yk)  << "; f(Zk) = " << f(Zk) << endl;
+	cout << "4 : Вычислим f(Yk) f(Zk) :: " << "f(Yk) = " << f(Yk) << "; f(Zk) = " << f(Zk) << endl;
 	do {
 		k++;
 		cout << endl << "5 : Сравниваем f(Yk) и f(Zk) : " << endl;
 		if (fYk <= fZk) {
-			cout << "fYk <= fZk		=> b = Zk " << endl << "Z|k+1 = Yk" << endl 
+			cout << "fYk <= fZk		=> b = Zk " << endl << "Z|k+1 = Yk" << endl
 				<< "Y|k+1  = a|k+1 + b|k+1 -Z|k";
 			b = Zk;
 			Zk = Yk;
@@ -264,7 +269,7 @@ void goldenRation(double a, double b, double eps) {
 			Yk = a + b - Yk;
 			cout << "Yk = " << Yk << endl;
 			fYk = f(Yk);
-			
+
 		}
 		else {
 			a = Yk;
@@ -282,7 +287,7 @@ void goldenRation(double a, double b, double eps) {
 }
 void fibonaci(double a, double b, double eps, double delta) {
 	// определение числа N и вычисление чисел Фибоначчи
-	double temp = abs(b - a) / (2*eps);
+	double temp = abs(b - a) / (2 * eps);
 	double Fnl = 1; // Fn last
 	double Fn = 1;
 	int N = 1;
@@ -319,7 +324,7 @@ void fibonaci(double a, double b, double eps, double delta) {
 			Zk = a + fibNums[N - k - 2] / fibNums[N - k - 1] * (b - a);
 			fZk = f(Zk);
 		}
-	} while (k!=N-3);
+	} while (k != N - 3);
 	Yk = (a - b) / 2;
 	Zk = Yk + eps;
 	fYk = f(Yk);
