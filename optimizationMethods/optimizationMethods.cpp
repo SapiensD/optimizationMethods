@@ -74,35 +74,31 @@ void singleMethodsMenu() {
 			{
 			case '1':
 				uniformSearch(a, b, eps);
-				singleMethodsMenu();
 				break;
 			case '2':
 				halfDivision(a, b, eps);
-				singleMethodsMenu();
 				break;
 			case '3':
 				dichotomy(a, b, eps);
-				singleMethodsMenu();
 				break;
 			case '4':
 				goldenRation(a, b, eps);
-				singleMethodsMenu();
 				break;
 			case '5':
 				fibonaci(a, b, eps, delta);
-				singleMethodsMenu();
 				break;
 			case '0':
+				flag = false;
 				mainMenu();
 				break;
 			case 'c':
-				singleMethodsMenu();
+				clearConsole();
 				break;
 			}
 			flag = false;
+			singleMethodsMenu();
 		}
 	}
-	clearConsole();
 }
 void mainMenu() {
 	bool flag = true;
